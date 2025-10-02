@@ -6,7 +6,8 @@ export default defineNuxtConfig({
   css: ['@picocss/pico'],
   runtimeConfig: {
     public: {
-      inventoryApiBaseUrl: process.env.NUXT_INVENTORY_API_BASE_URL
+      inventoryApiBaseUrl: process.env.NUXT_INVENTORY_API_BASE_URL,
+      serviceApiBaseUrl: process.env.NUXT_SERVICE_API_BASE_URL
     }
   }
 })
