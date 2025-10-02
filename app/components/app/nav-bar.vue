@@ -1,7 +1,7 @@
 <template>
     <nav class="container">
         <ul>
-            <li><strong>Zipa - Cliente</strong></li>
+            <li><strong>Zipa</strong></li>
         </ul>
         <ul>
             <li><NuxtLink to="/services">Servicios</NuxtLink></li>
