@@ -1,0 +1,216 @@
+@import url('https://unpkg.com/@picocss/pico@2.1.1/css/pico.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+:root{
+  --brand: #1e88e5; /* primary blue */
+  --brand-600: #1565c0; /* darker blue */
+  --muted: #475569; /* slate/blue-gray for muted text */
+  --bg: #f3f8ff; /* very light blue background */
+  --card: #ffffff;
+}
+
+html,body,#app {
+  height: 100%;
+}
+
+body {
+  font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  background: var(--bg);
+  color: #0f172a;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  margin: 0;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.25rem;
+}
+
+/* Card utility */
+.card {
+  background: var(--card);
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(15,23,42,0.06);
+  padding: 1rem;
+  margin: 0.75rem 0;
+}
+
+/* Buttons */
+button, .btn {
+  border-radius: 8px;
+  padding: 0.5rem 0.9rem;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+.btn-primary {
+  background: linear-gradient(90deg,var(--brand),var(--brand-600));
+  color: white;
+}
+.btn-secondary {
+  background: transparent;
+  border: 1px solid rgba(15,23,42,0.06);
+}
+
+/* Navbar styles */
+header.app-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: inherit;
+}
+.brand .logo {
+  font-size: 1.6rem;
+}
+.brand-logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  object-fit: cover;
+  display: inline-block;
+  border: 1px solid rgba(30,136,229,0.10);
+}
+
+/* Navigation styles */
+header.app-navbar { padding: 0.5rem 0; }
+nav[aria-label="Main navigation"] ul {
+  display: flex;
+  gap: 0.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+nav[aria-label="Main navigation"] li { margin: 0; }
+
+nav[aria-label="Main navigation"] a {
+  display: inline-block;
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  text-decoration: none;
+  color: inherit;
+  font-weight: 600;
+  transition: background 180ms ease, transform 120ms ease;
+}
+
+/* Menu section labels and divider */
+.menu-section-label {
+  font-size: 0.75rem;
+  color: var(--muted);
+  padding: 0 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  display: inline-flex;
+  align-items: center;
+}
+
+.menu-divider {
+  width: 1px;
+  background: rgba(30,136,229,0.12);
+  margin: 0 0.6rem;
+  align-self: stretch;
+}
+
+nav[aria-label="Main navigation"] a:hover {
+  background: rgba(30,136,229,0.10);
+  transform: translateY(-1px);
+}
+
+.nav-cta {
+  background: linear-gradient(90deg,var(--brand),var(--brand-600));
+  color: white !important;
+}
+
+.nav-link-muted { color: var(--muted); font-weight:500 }
+
+/* Hamburger toggle (mobile) */
+.nav-toggle {
+  display: none;
+  background: transparent;
+  border: 1px solid rgba(30,136,229,0.12);
+  color: var(--brand-600);
+  padding: 0.4rem 0.6rem;
+  border-radius: 8px;
+}
+
+/* Nav layout: split primary and actions */
+.nav-main { display:flex; gap:0.75rem; align-items:center; }
+.nav-actions { display:flex; gap:0.5rem; align-items:center; margin-left:1rem; }
+.nav-plain { padding:0.35rem 0.6rem; border-radius:8px; text-decoration:none; color:var(--muted); font-weight:600 }
+
+/* User menu */
+.user-menu { position:relative; }
+.user-button { background:transparent; border:1px solid rgba(30,136,229,0.08); padding:0.4rem 0.6rem; border-radius:8px; color:var(--brand-600); cursor:pointer }
+.user-dropdown { position:absolute; right:0; top:calc(100% + 8px); background:var(--card); border-radius:8px; box-shadow:0 8px 24px rgba(15,23,42,0.08); padding:0.5rem; display:flex; flex-direction:column; gap:0.35rem; min-width:180px; z-index:40 }
+.user-dropdown a, .user-dropdown button { text-align:left; padding:0.45rem 0.6rem; border-radius:6px; background:transparent; border:none; color:inherit }
+.user-dropdown a:hover, .user-dropdown button:hover { background: rgba(30,136,229,0.06) }
+
+/* Mobile styles */
+@media (max-width: 720px) {
+  nav[aria-label="Main navigation"] ul { display: none; flex-direction: column; width:100%; gap:0.5rem; }
+  nav[aria-label="Main navigation"] ul.open { display: flex; margin-top:0.5rem; }
+  .nav-toggle { display: inline-flex; }
+  header.app-navbar { flex-direction: row; align-items:center; }
+}
+
+
+/* Headings */
+h1 {
+  font-size: 1.6rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Forms tweaks */
+form label { display:block; margin-bottom:0.6rem; }
+form input, form select { width: 100%; padding: 0.6rem; border-radius: 8px; border:1px solid #e6e9ee; }
+
+/* Responsive tweaks */
+@media (max-width: 640px) {
+  .container { padding: 0.75rem; }
+  header.app-navbar { flex-direction: column; align-items:flex-start; }
+}
+
+/* Product card grid (modern e-store look) */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+  align-items: stretch;
+}
+.product-card {
+  background: var(--card);
+  border-radius: 12px;
+  box-shadow: 0 8px 22px rgba(15,23,42,0.06);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+.product-card:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(15,23,42,0.09); }
+.product-media {
+  background: linear-gradient(180deg, rgba(15,23,42,0.02), rgba(15,23,42,0.03));
+  height: 140px;
+  border-bottom: 1px solid rgba(15,23,42,0.04);
+}
+.product-body { padding: 0.85rem 1rem; flex: 1 1 auto; display:flex; flex-direction:column }
+.product-title-row { display:flex; align-items:center; justify-content:space-between; gap:0.5rem }
+.product-name { font-size:1.05rem; margin:0; }
+.product-price { font-weight:800; color:var(--brand-600); font-size:1.05rem }
+.product-actions { display:flex; gap:0.5rem; padding:0.75rem 1rem; align-items:center; justify-content:flex-end; border-top:1px solid rgba(15,23,42,0.03); }
+
+@media (max-width:520px) {
+  .product-media { height:120px }
+  .product-price { font-size:1rem }
+}

@@ -1,42 +1,52 @@
 <template>
-    <main class="container">
-        <h1>Crear nuevo producto</h1>
-        <form @submit.prevent="onSubmit">
-            <label>
-                Código identificador
-            <input v-model="form.codigo" type="number" required>
-            </label>
-            <label>
-                Nombre/Descripción
-            <input v-model="form.nombre" type="text" required>
-            </label>
-            <label>
-                Precio (COP)
-            <input v-model="form.precio" type="number" min="0" step="0.01" required>
-            </label>
-            <label style="display: flex; align-items: center; gap: 0.5rem;">
-                Categoría
-                <select v-model="form.categoria" required>
-                    <option value="">Seleccione una categoría</option>
-                    <option v-for="cat in categorias" :key="cat.id" :value="cat.id">
-                        {{ cat.nombre }}
-                    </option>
-                </select>
-                <button style="font-size: 1.2em; padding: 0 0.5em;" type="button" @click="showAddCat = true">+</button>
-            </label>
-            <dialog v-if="showAddCat" ref="addCatDialog" open style="max-width: 350px;">
-                <form style="display: flex; flex-direction: column; gap: 1em;" @submit.prevent="addCategoria">
-                    <label>Nombre nueva categoría
-                        <input v-model="newCatName" type="text" required autofocus>
-                    </label>
-                    <div style="display: flex; gap: 0.5em; justify-content: flex-end;">
-                        <button type="submit">Agregar</button>
-                        <button type="button" @click="closeAddCat">Cancelar</button>
+    <main>
+        <div class="card" style="max-width:720px; margin:auto;">
+            <h1>Crear nuevo producto</h1>
+            <form @submit.prevent="onSubmit" style="display:flex; flex-direction:column; gap:0.75rem;">
+                <label>
+                    Código identificador
+                    <input v-model="form.codigo" type="number" required />
+                </label>
+
+                <label>
+                    Nombre/Descripción
+                    <input v-model="form.nombre" type="text" required />
+                </label>
+
+                <label>
+                    Precio (COP)
+                    <input v-model="form.precio" type="number" min="0" step="0.01" required />
+                </label>
+
+                <label>
+                    Categoría
+                    <div style="display:flex; gap:0.5rem; align-items:center;">
+                        <select v-model="form.categoria" required style="flex:1;">
+                            <option value="">Seleccione una categoría</option>
+                            <option v-for="cat in categorias" :key="cat.id" :value="cat.id">
+                                {{ cat.nombre }}
+                            </option>
+                        </select>
+                        <button type="button" class="btn-secondary" @click="showAddCat = true">+</button>
                     </div>
-                </form>
-            </dialog>
-            <button type="submit">Crear</button>
-        </form>
+                </label>
+
+                <div v-if="showAddCat" style="border-top:1px solid #eef2f6; padding-top:0.75rem;">
+                    <label>
+                        Nombre nueva categoría
+                        <input v-model="newCatName" type="text" required autofocus />
+                    </label>
+                    <div style="display:flex; gap:0.5rem; justify-content:flex-end; margin-top:0.5rem;">
+                        <button class="btn-primary" @click.prevent="addCategoria">Agregar</button>
+                        <button class="btn-secondary" @click.prevent="closeAddCat">Cancelar</button>
+                    </div>
+                </div>
+
+                <div style="display:flex; gap:0.5rem; justify-content:flex-end; margin-top:0.5rem;">
+                    <button class="btn-primary" type="submit">Crear</button>
+                </div>
+            </form>
+        </div>
     </main>
 </template>
 
@@ -44,6 +54,7 @@
 <script setup lang="ts">
 
 import { ref, reactive, onMounted } from 'vue'
+import { gatewayFetch } from '../utils/api'
 const config = useRuntimeConfig();
 
 // Referencias a los campos del formulario
@@ -60,7 +71,7 @@ const addCatDialog = ref<null | HTMLDialogElement>(null)
 
 async function fetchCategorias() {
     try {
-        const data = await $fetch(`${config.public.inventoryApiBaseUrl}/clasificacion`)
+            const data = await gatewayFetch('inventory/clasificacion')
         // Mapeo de IDs a nombres
         categorias.value = Array.isArray(data)
             ? data.map((item: { catId: number, catNombre: string }) => ({ id: item.catId, nombre: item.catNombre }))
@@ -81,7 +92,7 @@ function closeAddCat() {
 async function addCategoria() {
     if (!newCatName.value.trim()) return
     try {
-        await $fetch(`${config.public.inventoryApiBaseUrl}/clasificacion`, {
+        await gatewayFetch('inventory/clasificacion', {
             method: 'POST',
             body: { catNombre: newCatName.value }
         })
@@ -96,15 +107,15 @@ async function addCategoria() {
 // Envío de datos del formulario
 async function onSubmit() {
     try {
-    await $fetch(`${config.public.inventoryApiBaseUrl}/producto`, {
+        await gatewayFetch('inventory/producto', {
             method: 'POST',
             body: {
-                "prodCodigo": form.codigo,
-                "prodNombre": form.nombre,
-                "prodPrecio": form.precio,
-                "catId": form.categoria
+                prodCodigo: form.codigo,
+                prodNombre: form.nombre,
+                prodPrecio: form.precio,
+                catId: form.categoria,
             }
-        });
+        })
         await navigateTo('/products');
     } catch (error) {
         console.error("Error al crear el producto:", error);

@@ -1,3 +1,17 @@
+node_modules/
+.nuxt/
+.output/
+dist/
+uploads/
+.env
+.env.*
+.DS_Store
+.vscode/
+.vs/
+*.log
+coverage/
+.idea/
+Dockerfile
 # Nuxt dev/build outputs
 .output
 .data
