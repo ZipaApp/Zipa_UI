@@ -30,3 +30,6 @@ logs
 .fleet
 .idea
 
+# Generated TLS certificates
+certs/key.pem
+certs/cert.pem

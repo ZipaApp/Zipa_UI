@@ -20,6 +20,14 @@ yarn install
 bun install
 ```
 
+## TLS Certificate Creation
+
+Generate a self-signed certificate for the current IPs (defined in the `certs` folder)
+
+```bash
+openssl req -x509 -nodes -newkey rsa:4096 -keyout certs/key.pem -out certs/cert.pem -days 365 -config certs/openssl-san.cnf
+```
+
 ## Development Server
 
 Start the development server on `http://localhost:3000`:

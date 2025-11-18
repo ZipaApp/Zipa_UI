@@ -1,4 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { readFileSync } from 'fs';
+
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
@@ -36,9 +38,13 @@ export default defineNuxtConfig({
   // Force the dev server to run on a non-conflicting port so it doesn't
   // clash with other services (inventory = 3000, servicios = 3001, auth = 3002).
   // Chosen port: 3100
-  server: {
-    host: '0.0.0.0',
+  devServer: {
+    https: {
+      key: readFileSync('./certs/key.pem', 'utf8'),
+      cert: readFileSync('./certs/cert.pem', 'utf8'),
+    },
     port: 3100,
+    host: '0.0.0.0',
   },
   app: {
     head: {
