@@ -45,7 +45,7 @@ function persistUserObject(userObj: any, token?: string) {
 async function onSubmit() {
   if (!email.value || !password.value) return
   try {
-    const res: any = await gatewayFetch('auth/login', {
+    const res: any = await gatewayFetch('user-service/auth/login', {
       method: 'POST',
       body: { Usu_email: email.value, Usu_password: password.value },
     })

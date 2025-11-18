@@ -109,7 +109,7 @@ async function fetchPayments() {
   const uid = getUserId()
   if (!uid) return
   try {
-    const res: any = await gatewayFetch(`auth/metodos-pago/usuario/${uid}`)
+    const res: any = await gatewayFetch(`user-service/metodos-pago/usuario/${uid}`)
     const data = res?.data || res
     paymentsState.value = Array.isArray(data) ? data : []
   } catch (e) {
@@ -143,7 +143,7 @@ async function addPayment() {
   }
 
   try {
-    await gatewayFetch(`auth/metodos-pago/${uid}`, {
+    await gatewayFetch(`user-service/metodos-pago/${uid}`, {
       method: 'POST',
       body: { Met_tipo: Met_tipo.value, Met_detalle: detalle, Met_predeterminado: Met_predeterminado.value },
     })
@@ -160,7 +160,7 @@ async function removePayment(idx: number) {
   const p = paymentsState.value[idx]
   if (!p) return
   try {
-    await gatewayFetch(`auth/metodos-pago/${p.Met_id}`, { method: 'DELETE' })
+    await gatewayFetch(`user-service/metodos-pago/${p.Met_id}`, { method: 'DELETE' })
     await fetchPayments()
   } catch (e) {
     console.error('Error removing payment', e)
@@ -172,7 +172,7 @@ async function setPredeterminado(metId: string) {
   const uid = getUserId()
   if (!uid) return
   try {
-    await gatewayFetch(`auth/metodos-pago/predeterminado/${uid}/${metId}`, { method: 'PUT' })
+    await gatewayFetch(`user-service/metodos-pago/predeterminado/${uid}/${metId}`, { method: 'PUT' })
     await fetchPayments()
   } catch (e) {
     console.error('Error setting predeterminado', e)

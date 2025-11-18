@@ -83,7 +83,7 @@ async function fetchAddresses() {
   const uid = getUserId()
   if (!uid) return
   try {
-    const res: any = await gatewayFetch(`auth/direcciones/usuario/${uid}`)
+    const res: any = await gatewayFetch(`user-service/direcciones/usuario/${uid}`)
     const data = res?.data || res
     addressesState.value = Array.isArray(data) ? data : []
   } catch (e) {
@@ -107,7 +107,7 @@ async function addAddress() {
   const uid = getUserId()
   if (!uid) { error.value = 'Usuario no autenticado'; return }
   try {
-    await gatewayFetch(`auth/direcciones/${uid}`, {
+    await gatewayFetch(`user-service/direcciones/${uid}`, {
       method: 'POST',
       body: {
         Dir_etiqueta: Dir_etiqueta.value || undefined,
@@ -128,7 +128,7 @@ async function removeAddress(idx: number) {
   const addr = addressesState.value[idx]
   if (!addr) return
   try {
-    await gatewayFetch(`auth/direcciones/${addr.Dir_id}`, { method: 'DELETE' })
+    await gatewayFetch(`user-service/direcciones/${addr.Dir_id}`, { method: 'DELETE' })
     await fetchAddresses()
   } catch (e) {
     console.error('Error removing address', e)
