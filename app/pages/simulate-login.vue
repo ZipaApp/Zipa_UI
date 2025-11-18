@@ -16,7 +16,7 @@
 
       <div v-if="user" style="margin-top:1rem; text-align:left; max-width:420px; margin-left:auto; margin-right:auto;">
         <h3>Usuario actual (prueba)</h3>
-        <div><strong>Nombre:</strong> {{ user.name }}</div>
+        <div><strong>Nombre:</strong> {{ user.nombre || user.name || user.Usu_fullName || user.email }}</div>
         <div><strong>Email:</strong> {{ user.email }}</div>
       </div>
     </div>
